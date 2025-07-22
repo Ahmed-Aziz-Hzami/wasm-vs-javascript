@@ -303,4 +303,7 @@ body {
   body {
     padding: 1rem;
   }
+  .results-section {
+    flex-direction: column;
+  }
 }
