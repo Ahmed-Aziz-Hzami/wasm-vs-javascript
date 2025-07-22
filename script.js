@@ -1,14 +1,13 @@
 import initWasmModule from './wasm_module.js';
 
 document.getElementById('runButton').addEventListener('click', () => {
-  const resultsDiv = document.getElementById('results');
-  resultsDiv.innerHTML = '';
+  const timeSpanWasm = document.getElementById('wasm-time');
+  const countSpanWasm = document.getElementById('wasm-prime-count');
+  const timeSpanJs = document.getElementById('js-time');
+  const countSpanJs = document.getElementById('js-prime-count');
 
   const limit = 10000000;
 
-  // JavaScript Task
-  const jsStart = performance.now();
-  let jsCount = 0;
 
   function isPrime(n) {
     if (n <= 1) return false;
@@ -20,27 +19,37 @@ document.getElementById('runButton').addEventListener('click', () => {
     return true;
   }
 
-  function byJS () {
-    setTimeout(() => {
-      for (let i = 2; i <= limit; i++) {
-        if (isPrime(i)) {
-          jsCount++;
-        }
+  function countPrimes(limit) {
+    let count = 0;
+    for (let i = 2; i <= limit; i++) {
+      if (isPrime(i)) {
+        count++;
       }
-
+    }
+    return count;
+  }
+  
+  function byJS() {
+    setTimeout(() => {
+      const jsStart = performance.now();
+      const jsCount = countPrimes(limit);
       const jsEnd = performance.now();
       const jsTime = jsEnd - jsStart;
-      resultsDiv.innerHTML 
-      += `<p>by JS: ${jsTime.toFixed(2)} ms, Primes Found: ${jsCount}</p>`;
-    }, 0)
+  
+      timeSpanJs.innerText = `${jsTime.toFixed(2)} ms`;
+      countSpanJs.innerText =jsCount.toString()
+    }, 0);
   }
+
   function byWASM (Module) {
     const wasmStart = performance.now();
     const wasmCount = Module._count_primes(limit);
     const wasmEnd = performance.now();
     const wasmTime = wasmEnd - wasmStart;
-    resultsDiv.innerHTML 
-    += `<p>by WASM: ${wasmTime.toFixed(2)} ms, Primes Found: ${wasmCount}</p>`;
+
+    timeSpanWasm.innerText = `${wasmTime.toFixed(2)} ms`;
+    countSpanWasm.innerText =wasmCount.toString()
+  
   }
 
   initWasmModule().then(Module => {

@@ -1,18 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WASM vs JavaScript Example</title>
-    <style>
-      body { padding: 1em; }
-    </style>
-</head>
-<body>
-    <h1>WASM vs JavaScript Performance</h1>
-    <button id="runButton">Run Test</button>
-    <div id="results"></div>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="section-header">
+        <h1>WASM vs JavaScript Performance</h1>
+        <p>
+          Beautiful, interactive code blocks with syntax highlighting and modern
+          design
+        </p>
+        <button class="run-btn" id="runButton">Run Test</button>
+        <div class="results-section" id="results">
+          <div class="results-content">
+            <h2 class="results-header">WASM</h2>
+            <div class="results">
+              <span class="key">Elapsed Time :</span>
+              <span id="wasm-time" class="value"></span>
+              <span class="key">Primes Found :</span>
+              <span id="wasm-prime-count" class="value"></span>
+            </div>
+            
+          </div>
+          <div class="results-content">
+            <h2 class="results-header">JavaScript</h2>
+            <div class="results">
+              <span class="key">Elapsed Time :</span>
+              <span id="js-time" class="value"></span>
+              <span class="key">Primes Found :</span>
+              <span id="js-prime-count" class="value"></span>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="code-grid">
+        <div class="code-block">
+          <div class="code-header">
+            <div class="window-controls">
+              <div class="control-dot red"></div>
+              <div class="control-dot yellow"></div>
+              <div class="control-dot green"></div>
+            </div>
+            <div class="language-tag">JavaScript</div>
+            <button class="copy-btn" onclick="copyCode(this, 'js-code')">
+              Copy
+            </button>
+          </div>
+          <div class="code-content">
+            <pre
+              id="js-code"
+            ><span class="keyword">function</span> <span class="function">isPrime</span>(<span class="variable">n</span>) {
+<span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">&lt;=</span> <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+<span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">&lt;=</span> <span class="number">3</span>) <span class="keyword">return</span> <span class="keyword">true</span>;
+<span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">%</span> <span class="number">2</span> <span class="operator">===</span> <span class="number">0</span> <span class="operator">||</span> <span class="variable">n</span> <span class="operator">%</span> <span class="number">3</span> <span class="operator">===</span> <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">5</span>; <span class="variable">i</span> <span class="operator">*</span> <span class="variable">i</span> <span class="operator">&lt;=</span> <span class="variable">n</span>; <span class="variable">i</span> <span class="operator">+=</span> <span class="number">6</span>) {
+<span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">%</span> <span class="variable">i</span> <span class="operator">===</span> <span class="number">0</span> <span class="operator">||</span> <span class="variable">n</span> <span class="operator">%</span> (<span class="variable">i</span> <span class="operator">+</span> <span class="number">2</span>) <span class="operator">===</span> <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+}
+<span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+<span class="keyword">function</span> <span class="function">countPrimes</span>(<span class="variable">limit</span>) {
+<span class="keyword">let</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;
+<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">2</span>; <span class="variable">i</span> <span class="operator">&lt;=</span> <span class="variable">limit</span>; <span class="variable">i</span><span class="operator">++</span>) {
+<span class="keyword">if</span> (<span class="function">isPrime</span>(<span class="variable">i</span>)) {
+<span class="variable">count</span><span class="operator">++</span>;
+}
+}
+<span class="keyword">return</span> <span class="variable">count</span>;
+}</pre>
+          </div>
+        </div>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="window-controls">
+              <div class="control-dot red"></div>
+              <div class="control-dot yellow"></div>
+              <div class="control-dot green"></div>
+            </div>
+            <div class="language-tag">C</div>
+            <button class="copy-btn" onclick="copyCode(this, 'c-code')">
+              Copy
+            </button>
+          </div>
+          <div class="code-content">
+            <pre id="c-code">
+<span class="keyword">bool</span> <span class="function">is_prime</span>(<span class="keyword">int</span> <span class="variable">n</span>) {
+<span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">&lt;=</span> <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+<span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">&lt;=</span> <span class="number">3</span>) <span class="keyword">return</span> <span class="keyword">true</span>;
+<span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">%</span> <span class="number">2</span> <span class="operator">==</span> <span class="number">0</span> <span class="operator">||</span> <span class="variable">n</span> <span class="operator">%</span> <span class="number">3</span> <span class="operator">==</span> <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">5</span>; <span class="variable">i</span> <span class="operator">*</span> <span class="variable">i</span> <span class="operator">&lt;=</span> <span class="variable">n</span>; <span class="variable">i</span> <span class="operator">+=</span> <span class="number">6</span>) {
+  <span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">%</span> <span class="variable">i</span> <span class="operator">==</span> <span class="number">0</span> <span class="operator">||</span> <span class="variable">n</span> <span class="operator">%</span> (<span class="variable">i</span> <span class="operator">+</span> <span class="number">2</span>) <span class="operator">==</span> <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+}
+<span class="keyword">return</span> <span class="keyword">true</span>;
+}
+
+<span class="keyword">int</span> <span class="function">count_primes</span>(<span class="keyword">int</span> <span class="variable">limit</span>) {
+<span class="keyword">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">2</span>; <span class="variable">i</span> <span class="operator">&lt;=</span> <span class="variable">limit</span>; <span class="variable">i</span><span class="operator">++</span>) {
+  <span class="keyword">if</span> (<span class="function">is_prime</span>(<span class="variable">i</span>)) {
+      <span class="variable">count</span><span class="operator">++</span>;
+  }
+}
+<span class="keyword">return</span> <span class="variable">count</span>;
+}
+</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function copyCode(button, codeId) {
+        const codeElement = document.getElementById(codeId);
+        const codeText = codeElement.textContent;
+
+        navigator.clipboard
+          .writeText(codeText)
+          .then(() => {
+            button.classList.add("copied");
+            button.innerHTML = "Copied!";
+
+            // Reset after 2 seconds
+            setTimeout(() => {
+              button.classList.remove("copied");
+              button.innerHTML = "Copy";
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy code: ", err);
+            button.innerHTML = "Failed";
+            setTimeout(() => {
+              button.innerHTML = "Copy";
+            }, 2000);
+          });
+      }
+    </script>
     <script type="module" src="script.js"></script>
-</body>
+  </body>
 </html>
