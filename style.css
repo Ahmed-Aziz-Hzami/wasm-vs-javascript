@@ -102,10 +102,8 @@ body {
 }
 
 .language-tag {
-  background: linear-gradient(45deg, #7c4dff, #64ffda);
-  color: white;
+  color: #a0a0a0;
   padding: 0.3rem 0.8rem;
-  border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
