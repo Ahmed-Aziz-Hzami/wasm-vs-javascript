@@ -31,7 +31,6 @@ document.getElementById('runButton').addEventListener('click', () => {
   }
   
   function byJS() {
-    setTimeout(() => {
       const jsStart = performance.now();
       const jsCount = countPrimes(limit);
       const jsEnd = performance.now();
@@ -39,7 +38,6 @@ document.getElementById('runButton').addEventListener('click', () => {
   
       timeSpanJs.innerText = `${jsTime.toFixed(2)} ms`;
       countSpanJs.innerText =jsCount.toString()
-    }, 0);
   }
 
   function byWASM (Module) {
