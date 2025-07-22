@@ -7,7 +7,6 @@ document.getElementById('runButton').addEventListener('click', () => {
   const countSpanJs = document.getElementById('js-prime-count');
 
   const limit = 10000000;
-  const jsStart = performance.now();
 
 
 
@@ -33,6 +32,7 @@ document.getElementById('runButton').addEventListener('click', () => {
   
   function byJS() {
     setTimeout(() => {
+      const jsStart = performance.now();
       const jsCount = countPrimes(limit);
       const jsEnd = performance.now();
       const jsTime = jsEnd - jsStart;
