@@ -119,6 +119,17 @@ body {
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s, transform 0.1s;
+}
+
+.run-btn:hover {
+  background: #6a38f5; 
+}
+
+.run-btn:active {
+  background: #5a2ed1; 
+  transform: scale(0.98); 
 }
 .copy-btn {
   background: transparent;
